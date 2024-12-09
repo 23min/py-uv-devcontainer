@@ -1,0 +1,12 @@
+// .vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "load-env",
+            "type": "shell",
+            "command": "${workspaceFolder}/load_env.sh",
+            "problemMatcher": []
+        }
+    ]
+}

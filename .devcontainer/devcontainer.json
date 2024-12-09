@@ -1,0 +1,87 @@
+// devcontainer.json for setting up a Python development environment with MQTT, Zigbee, and VictoriaMetrics.
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "default",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {
+			"PYTHON_VERSION": "3.13",
+			"DEBIAN_VERSION": "bullseye"
+		}
+	},
+	// Path to the main workspace folder in the container
+	"workspaceFolder": "/workspace",
+	// Bind mount of the local workspace folder to the container workspace directory
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+	// Option to run specific services on container startup (commented out)
+	// "runServices": ["python-listener", "api", "simulator"],
+	// Additional features to include in the DevContainer (using Docker outside the container)
+	"features": {
+		"ghcr.io/dhoeric/features/hadolint:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+	// Attaches the container to a specified Docker network to interact with other containers on it
+	// "networks": {
+	// 	"default": "dev_network"  // Uses an external network named 'dev_network'
+	// },
+	// Forwarded ports from the container to the local machine for service access
+	// "forwardPorts": [1883, 8428],
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	// Tool-specific settings, in this case for configuring VS Code
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"docker.dockerPath": "/usr/local/bin/docker",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.fixAll": "explicit",
+					"source.organizeImports": "explicit"
+				},
+				"editor.defaultFormatter": "charliermarsh.ruff",
+				"python.envFile": "${workspaceFolder}/.env/.env.common",
+				"python.experiments.enabled": false,
+				"python.analysis.autoImportCompletions": true,
+				"python.analysis.autoSearchPaths": false,
+				"python.analysis.diagnosticMode": "workspace",
+				"python.analysis.typeCheckingMode": "strict",
+				"python.terminal.activateEnvironment": true,
+				"python.terminal.activateEnvInCurrentTerminal": true,
+				"ruff.linter": true,
+				"ruff.format": true,
+				"ruff.configPath": "${workspaceFolder}/.ruff.toml",
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
+			"extensions": [
+				"github.copilot",
+				"irongeek.vscode-env",
+				"mhutchie.git-graph",
+				"ms-azuretools.vscode-docker",
+				"ms-python.debugpy",
+				"ms-python.python",
+				"njqdev.vscode-python-typehint",
+				"tamasfe.even-better-toml",
+				"redhat.vscode-yaml",
+				"exiasr.hadolint",
+				"kevinrose.vsc-python-indent",
+				"njpwerner.autodocst",
+				"pkief.material-icon-theme",
+				"charliermarsh.ruff"
+			]
+		}
+	},
+	"remoteUser": "vscode",
+	// "remoteEnv": {
+	// 	"HOST_HOME": "${localEnv:HOME}"  // Exposes host home directory path as an environment variable
+	// },
+	"mounts": [
+		// "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",  // Uncomment for Docker socket sharing
+		// "source=${localWorkspaceFolder},target=/workspace,type=bind"  // Mounts local workspace
+		// "source=${localEnv:HOME},target=${localEnv:HOME},type=bind,readonly"  // Mount host home directory
+	],
+	"runArgs": [
+		"--env-file",
+		".devcontainer/devcontainer.env" // Environment variables for the container
+		// "--network", "dev_network"  // Network to connect the container with other services
+	]
+}

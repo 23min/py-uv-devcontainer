@@ -1,0 +1,28 @@
+[project]
+name = "default"
+version = "0.1.0"
+description = "Python development environment using VSCode's Dev Container feature. The environment includes uv and Ruff."
+
+authors = [{ name = "23min", email = "peter@23min.com" }]
+maintainers = [{ name = "23min", email = "peter@23min.com" }]
+
+requires-python = ">=3.13"
+readme = "README.md"
+license = { file = "LICENSE" }
+
+dependencies = ["scraper", "utils"]
+
+[tool.uv]
+dev-dependencies = [
+    "pre-commit>=4.0.1",
+    "pyright>=1.1.389",
+    "pytest>=8.3.3",
+    "ruff>=0.8.0",
+]
+
+[tool.uv.sources]
+scraper = { workspace = true }
+utils = { workspace = true }
+
+[tool.uv.workspace]
+members = ["packages/*"]

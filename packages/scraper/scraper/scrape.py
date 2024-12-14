@@ -55,7 +55,7 @@ errors_file = "errors_404.txt"
 
 @dataclass
 class Post:
-    """Data class to store post information."""
+    """Data class to store post data."""
 
     id: str
     title: str

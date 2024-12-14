@@ -64,7 +64,7 @@
 				"redhat.vscode-yaml",
 				"exiasr.hadolint",
 				"kevinrose.vsc-python-indent",
-				"njpwerner.autodocst",
+				"njpwerner.autodocstring",
 				"pkief.material-icon-theme",
 				"charliermarsh.ruff"
 			]

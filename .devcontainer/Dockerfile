@@ -49,9 +49,6 @@ RUN apt-get update && \
     pipx ensurepath >> /var/log/build.log 2>&1 && \
     uv --version >> /var/log/build.log 2>&1 || echo "UV installation failed" >> /var/log/build.log
 
-# Configure direnv for zsh environment
-# RUN echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
-
 # Create sudoers file for passwordless sudo access, create the user, and set permissions
 RUN mkdir -p /etc/sudoers.d && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd && \
@@ -68,6 +65,9 @@ RUN mkdir -p /etc/sudoers.d && \
     # Set permissions for the workspace folder
     mkdir -p /workspace && chown -R ${USERNAME}:${USERNAME} /workspace && \
     chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+
+# uv autocompletion for zsh
+RUN echo "eval \"\$(uv generate-shell-completion zsh)\"" >> ~/.zshrc
 
 # Set working directory
 WORKDIR /workspace
